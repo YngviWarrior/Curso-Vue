@@ -1,0 +1,27 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<div id="app">
+    <!--V-once, não atualizara o counteudo da tag marcada com V-once.-->
+    <p v-once>{{titulo}}</p>
+    <p>{{saudacao()}}</p>
+    <!--{{double start, tudo aqui tem q ser passivel de ser convertido em string}}-->
+    <a v-bind:href="link">Google</a>
+    <!--{{diretiva(propriedades personalizadas), v-bind permite propriedades das tags html lerem variaveis Vue.}}-->
+</div>
+
+<script>
+    new Vue({
+        el:'#app',
+        data: {
+            titulo: 'Usando VueJS!',
+            link: 'http://google.com.br'
+        },
+        methods:{
+            //Função nao pode ter mesmo nome de variavel.
+            saudacao: function() {
+                this.titulo = ' Bom dia !'
+                return this.titulo
+            }
+        }
+    })
+</script>
