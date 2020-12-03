@@ -1,0 +1,30 @@
+<meta charset="UTF8">
+<script src="https://unpkg.com/vue"></script>
+
+<div id="app">
+    <ul>
+        <!--cor é os indices do array, cores é o atributo vue que é uma array.-->
+        <!-- : == v-bind // teste o nome de um atributo html qualquer.-->
+        <!--Para busca o indice, é sempre o segundo parametro do parênteses. -->
+        <li v-for="(cor, i) in cores" :teste="cor">{{ i+ 1 }}) {{ cor }}</li>
+    </ul>
+</div>
+
+<script>
+    new Vue({
+        el:'#app',
+        data: {
+            cores: ['vermelho', 'verde', 'amarelo', 'azul'],
+            pessoas: [
+                {nome: 'Ana', idade: 26, peso: 59},
+                {nome: 'Guilherme', idade: 22, peso: 89},
+            ]
+        }
+    })
+</script>
+
+<style>
+    ul {
+        list-style: none;
+    }
+</style>
