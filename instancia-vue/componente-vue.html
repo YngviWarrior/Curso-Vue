@@ -1,0 +1,46 @@
+<!--NÃO FUNCIONA-->
+<meta charset="UTF-8">
+<script src="https://unpkg.com/vue"></script>
+
+<div id="app">
+    <!--Elementos serão renderizados mesmo com el não referenciando #app-->
+    <!--<comp></comp>-->
+    <!--Pode ser renderizado como classe, mas não funcionará igual uma classe.-->
+    <!--div class="comp"></div-->
+    <comp></comp>
+    <comp></comp>
+    <comp></comp>
+</div>
+
+<script>    
+    Vue.component('comp', {
+        //precisa estar encapsulado.
+        template: `
+            <div>
+                <h1>{{ aula }}</h1>
+                <h2>{{ modulo }}</h2>
+                <button @click="alterarAula">Alterar Aula</button>
+                <button @click="alterarModulo">Alterar Modulo</button>
+            </div>
+        `,
+        data: function() {
+            return {
+                aula: 'Aula: Montando instância Vue',
+                modulo: 'Módulo: Instância Vue'
+            }
+        },
+        methods: {
+            alterarAula() {
+                this.aula += '#'
+            },
+            alterarModulo() {
+                this.modulo += '#'
+            }
+        }
+    })
+
+    const vm = new Vue({
+        //el: '#app',
+        el: 'comp',
+    })
+</script>

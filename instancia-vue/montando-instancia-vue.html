@@ -1,0 +1,40 @@
+<meta charset="UTF-8">
+<script src="https://unpkg.com/vue"></script>
+
+<div id="app">
+</div>
+
+<script>
+    const vm = new Vue({
+        //el: '#app',
+        //precisa estar encapsulado.
+        template: `
+            <div>
+                <h1>{{ aula }}</h1>
+                <h2>{{ modulo }}</h2>
+                <button @click="alterarAula">Alterar Aula</button>
+                <button @click="alterarModulo">Alterar Modulo</button>
+            </div>
+        `,
+        data: {
+            aula: 'Aula: Montando instância Vue',
+            modulo: 'Módulo: Instância Vue'
+        },
+        methods: {
+            alterarAula() {
+                this.aula += '#'
+            },
+            alterarModulo() {
+                this.modulo += '#'
+            }
+        }
+    })
+    // mesma função de el:'#app'
+    //vm.$mount('#app')
+    
+    // mount sem referencia, precisa de um template para funcionar
+    vm.$mount()
+
+    // montar em js puro ---- Template é mesma coisa que atributo el do vue.
+    document.querySelector('#app').appendChild(vm.$el)
+</script>
