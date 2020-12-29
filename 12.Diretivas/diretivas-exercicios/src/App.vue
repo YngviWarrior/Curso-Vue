@@ -9,8 +9,10 @@
     <p v-destaque:fundo.atrasar="'lightblue'">Usando diretiva personalizada</p>
     <p v-destaque="cor">Usando diretiva personalizada</p>
 
-    <p v-destaque-local:fundo.atrasar.alternar="'lightblue'">Usando diretiva personalizada</p>
-    <p v-destaque-local.alternar="cor">Usando diretiva personalizada</p>
+    <p v-destaque-local:fundo.atrasar.alternar="{cor1: 'green', cor2: 'red', atraso: 2000, intervalo: 200}">
+      Usando diretiva personalizada
+    </p>
+    <p v-destaque-local.alternar.atrasar="{cor1: 'red', atraso: 5000}">Usando diretiva personalizada</p>
   </div>
 </template>
 
@@ -21,8 +23,8 @@ export default {
     //Registro de diretiva local.
     "destaque-local": {
       bind(el, binding) {
-		// constante c/ função, recebimento de um parametro e corpo da função.
-        const aplicarCor = cor => {
+        // constante c/ função, recebimento de um parametro e corpo da função.
+        const aplicarCor = (cor) => {
           if (binding.arg === "fundo") {
             el.style.backgroundColor = cor;
           } else {
@@ -31,24 +33,22 @@ export default {
         };
         let atraso = 0;
 
-		if (binding.modifiers["atrasar"]) atraso = 3000;
-		
+        if (binding.modifiers["atrasar"]) atraso = binding.value.atraso;
 
-		let cor1 = binding.value
-		let cor2 = 'purple'
-		let corAtual = cor1
+        let cor1 = binding.value.cor1;
+        let cor2 = binding.value.cor2;
+        let corAtual = cor1;
 
         setTimeout(() => {
-			if (binding.modifiers["alternar"]) {
-				setInterval(() => {
-					corAtual = corAtual === cor1 ? cor2 : cor1
-					aplicarCor(corAtual)
-				}, 1000);
-			} else {
-				aplicarCor(binding.value)				
-			}
-				
-		}, atraso);
+          if (binding.modifiers["alternar"]) {
+            setInterval(() => {
+              corAtual = corAtual === cor1 ? cor2 : cor1;
+              aplicarCor(corAtual);
+            }, binding.value.intervalo);
+          } else {
+            aplicarCor(binding.value.cor1);
+          }
+        }, atraso);
       },
     },
   },

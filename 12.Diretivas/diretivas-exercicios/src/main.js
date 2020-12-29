@@ -18,7 +18,6 @@ Vue.directive('destaque', {
 				el.style.color = binding.value
 			}
 		}, atraso);
-
 	}
 })
 
