@@ -2,45 +2,38 @@
 	<div id="app" class="container-fluid">
 		<h1>Animações</h1>
 		<hr>
-		<!-- o atributo variant aplica coloração do css Bootstrap. -->
 		<b-button variant="primary" class="mb-4"
 			@click="exibir = !exibir">Mostrar Mensagem</b-button>
 		
-		<!-- nome da classe -->
 		<!-- <transition name="fade" appear>
-			<b-alert variant="info" show v-if="exibir"> {{ msg }} </b-alert>
-		</transition> -->
-		<!-- type, irá priorizar o tempo da animação ou transição, caso 1 seja maior -->
-		<!-- <transition name="slide" type="animation" appear>
-			<b-alert variant="info" show v-show="exibir"> {{ msg }} </b-alert>
-		</transition> -->
-		<!-- Classes importadas por link, no index, 
-			estamos usando nomeclaturas fora do padrão vue -->
-		<!-- <transition
-			enter-active-class="animated bounce"
-			leave-active-class="animated shake"
-		>
-			<b-alert variant="info" show v-show="exibir"> {{ msg }} </b-alert>
-		</transition> -->
-		<!-- <hr>
+			<b-alert variant="info" show v-if="exibir">{{ msg }}</b-alert>
+		</transition>
 
+		<transition name="slide" type="animation" appear>
+			<b-alert variant="info" show v-show="exibir">{{ msg }}</b-alert>
+		</transition>
+
+		<transition 
+			enter-active-class="animated bounce"
+			leave-active-class="animated shake">
+			<b-alert variant="info" show v-show="exibir">{{ msg }}</b-alert>
+		</transition> -->
+
+		<!-- <hr>
 		<b-select v-model="tipoAnimacao" class="mb-4">
 			<option value="fade">Fade</option>
 			<option value="slide">Slide</option>
-		</b-select> -->
-		<!-- Necessario o atributo key para funcionar a transição. -->
-		<!-- mode="out-in" tira o elemento e depois entra o outro. -->
-		<!-- <transition :name="tipoAnimacao" mode="out-in">
-			<b-alert variant="info" show v-if="exibir" key="info"> {{ msg }} </b-alert>
-			<b-alert variant="warning" show v-else key="warn"> {{ msg }} </b-alert>
+		</b-select>
+
+		<transition :name="tipoAnimacao" mode="out-in">
+			<b-alert variant="info" show v-if="exibir" key="info">{{ msg }}</b-alert>
+			<b-alert variant="warning" show v-else key="warn">{{ msg }}</b-alert>
 		</transition>
 		
 		<hr>
-		<button @click="exibir2 = !exibir2">Alternar</button> -->
-		<!-- 8 métodos de ciclo de vida para transiçoes em JS (HOOKS) -->
-		<!-- :css, não deixa css influenciar na transition -->
-		<!-- <transition
-			:css="false" 
+		<button @click="exibir2 = !exibir2">Alternar</button>
+		<transition
+			:css="false"
 			@before-enter="beforeEnter"
 			@enter="enter"
 			@after-enter="afterEnter"
@@ -50,50 +43,41 @@
 			@leave="leave"
 			@after-leave="afterLeave"
 			@leave-cancelled="leaveCancelled">
-			<div v-if="exibir2" class="caixa">
-
-			</div>
+			<div v-if="exibir2" class="caixa"></div>
 		</transition>
-		
+
 		<hr>
 		<div class="mb-4">
 			<b-button variant="primary" class="mr-2"
 				@click="componenteSelecionado = 'AlertaInfo'">Info</b-button>
-			<b-button variant="secondary" 
-				@click="componenteSelecionado = 'AlertaAdvertencia'">Advertencia</b-button>
+			<b-button variant="secondary"
+				@click="componenteSelecionado = 'AlertaAdvertencia'">Advertência</b-button>
 		</div>
 		<transition name="fade" mode="out-in">
 			<component :is="componenteSelecionado"></component>
 		</transition> -->
+
 		<hr>
-		
-		<b-button class="mb-4" @click="add">Add</b-button>
-		<!-- Só funciona se tiver :key, tag, escolhe a tag q vai envolver o grupo. -->
+		<b-button @click="adicionarAluno" class="mb-4">Adicionar Aluno</b-button>
 		<transition-group name="slide" tag="div">
 			<b-list-group v-for="(aluno, i) in alunos" :key="aluno">
-				<b-list-item @click="remove(i)">
-					{{ aluno }}
-				</b-list-item>
+				<b-list-group-item @click="removerAluno(i)">{{ aluno }}</b-list-group-item>
 			</b-list-group>
 		</transition-group>
 	</div>
 </template>
 
 <script>
-import AlertaAdvertencia from "./AlertaAdvertencia";
-import AlertaInfo from "./AlertaInfo";
+import AlertaAdvertencia from './AlertaAdvertencia.vue'
+import AlertaInfo from './AlertaInfo.vue'
+
 export default {
-	components: {
-		AlertaAdvertencia, 
-		AlertaInfo
-	},
+	components: { AlertaAdvertencia, AlertaInfo },
 	data() {
 		return {
-			alunos: ['roberto', 'julia', 'teresa', 'paulo'],
-			msg: 'Umas mensagem de informção para o usuário!',
-			exibir: false, // flag para display html
-			/*Se o html, aparecer quando carregar a página, o atributo appear na 
-				tag transition fará a animação e transição inves de aparecer abruptamente.*/
+			alunos: ['Roberto', 'Julia', 'Teresa', 'Paulo'],
+			msg: 'Uma mensagem de informação para o usuário!',
+			exibir: false,
 			exibir2: true,
 			tipoAnimacao: 'fade',
 			larguraBase: 0,
@@ -101,24 +85,25 @@ export default {
 		}
 	},
 	methods: {
-		add() {
+		adicionarAluno() {
 			const s = Math.random().toString(36).substring(2)
 			this.alunos.push(s)
 		},
-		remove(indice) {
+		removerAluno(indice) {
 			this.alunos.splice(indice, 1)
 		},
-		animar(el, dona, negativo) {
+		animar(el, done, negativo) {
 			let rodada = 1
 			const temporizador = setInterval(() => {
-				const novaLargura = this.larguraBase + (negativo ? -rodada * 10: rodada * 10)
+				const novaLargura = this.larguraBase + 
+					(negativo ? -rodada * 10 : rodada * 10)
 				el.style.width = `${novaLargura}px`
 				rodada++
-				if(rodada > 30){
+				if(rodada > 30) {
 					clearInterval(temporizador)
 					done()
 				}
-			}, 20);
+			}, 20)
 		},
 		beforeEnter(el) {
 			this.larguraBase = 0
@@ -126,12 +111,11 @@ export default {
 		},
 		enter(el, done) {
 			this.animar(el, done, false)
-			//done() //Dizer q animação foi concluida, continuando o script, fazendo acontecer.
 		},
 		// afterEnter(el) {
 		// 	console.log('afterEnter')
 		// },
-		// enterCancelled(el) {
+		// enterCancelled() {
 		// 	console.log('enterCancelled')
 		// },
 		beforeLeave(el) {
@@ -144,7 +128,7 @@ export default {
 		// afterLeave(el) {
 		// 	console.log('afterLeave')
 		// },
-		// leaveCancelled(el) {
+		// leaveCancelled() {
 		// 	console.log('enterCancelled')
 		// },
 	}
@@ -161,28 +145,24 @@ export default {
 	margin-top: 60px;
 	font-size: 1.5rem;
 }
-/* Padrão vue: 
-	nome da classe + enter, enter-active, enter-to ou leave, leave-active, leave-to */
+
+.caixa {
+	height: 100px;
+	width: 300px;
+	margin: 30px auto;
+	background-color: lightgreen;
+}
+
 .fade-enter, .fade-leave-to {
 	opacity: 0;
 }
 
 .fade-enter-active, .fade-leave-active {
-	transition: opacity 0.5s;
+	transition: opacity 2s;
 }
-
-/*.fade-enter-to {
-	opacity: 1;
-}
-    Já são valores padrões, saindo de 0 vai p 1
-.fade-leave {
-	opacity: 1;
-}*/
-
-/* Keyframes no eixo y */
 
 @keyframes slide-in {
-	from { transform: translateY(40px);	}
+	from { transform: translateY(40px); }
 	to { transform: translateY(0); }
 }
 
@@ -207,15 +187,7 @@ export default {
 	opacity: 0;
 }
 
-.caixa {
-	height: 100px;
-	widows: 300px;
-	margin: 30px auto;
-	background-color: lightgreen;
-}
-
 .slide-move {
 	transition: transform 1s;
 }
-
 </style>
