@@ -1,0 +1,20 @@
+Getters são dentro das variáveis computed.
+Mutations que tem a função de Setter, dentro dos Methods.
+
+operador spread ...Mutations(['exemplo'], ['exemplo2']) adiciona os Mutations dentro
+do methods do componente. O spread funciona no getters, é usado para ter mais de 1
+variável computada.
+
+Actions recebem dispatchs dos componentes e envia o commit para o mutation sendo responsavel
+apenas em mudar o estado.
+São responsaveis em conter as regras de négocios, usando métodos async.
+
+Ao AddProdutos, posso acessar o action através do $store.dispatch() ou importando
+os métodos que estão no action através do ...mapActions() e o import do mesmo vindo do vuex.
+
+dispatch, mapActions e mapMutations só recebem 1 ou 2 parametros.
+
+Modularizando os getters, mutations e actions em arquivos diferentes, e importando-os
+dentro do vuex.Store({ modules: {} }) todas essas funcionalidades estarão no Vuex Global,
+menos o state de cada modulo, ou seja, cada modulo terá seu proprio state. Usando Namespace
+poderemos ter funcionalidades com mesmo nome, sem causar conflito.
