@@ -15,7 +15,7 @@
           v-model.number="quantity" />
         <v-btn class="blue darken-3 white--text"
           :disabled="quantity <= 0 || Number.isInteger(quantity)"
-          @click="buyStock">Vender</v-btn>
+          @click="sellStock">Vender</v-btn>
       </v-container>
     </v-card>
   </v-flex>
@@ -39,7 +39,7 @@ export default {
         stockPrice: this.stock.price,
         quantity: this.quantity
       }
-      this.sellStockAction(order)
+      this.sellStocksAction(order)
       // this.$store.dispatch('sellStock', order)
       this.quantity = 0
     }

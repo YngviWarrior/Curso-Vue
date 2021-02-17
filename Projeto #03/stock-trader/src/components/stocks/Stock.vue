@@ -10,7 +10,7 @@
         <v-text-field label="Quantidade" type="number" 
           v-model.number="quantity" />
         <v-btn class="green darken-3 white--text"
-          :disabled="quantity <= 0 || Number.isInteger(quantity)"
+          :disabled="quantity <= 0 || !Number.isInteger(quantity)"
           @click="buyStock">Comprar</v-btn>
       </v-container>
     </v-card>
@@ -20,9 +20,6 @@
 <script>
 export default {
   props: ['stock'],
-  created() {
-    console.log(this.stock)
-  },
   data() {
     return {
       quantity: 0
@@ -37,6 +34,7 @@ export default {
       }
 
       this.$store.dispatch('buyStock', order)
+      
       this.quantity = 0
     }
   }
