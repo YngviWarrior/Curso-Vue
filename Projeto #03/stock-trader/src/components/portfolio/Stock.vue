@@ -32,14 +32,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions({ sellStocksAction: 'sellStock' }),
+    ...mapActions({ sellStockAction: 'sellStock' }),
     sellStock() {
       const order = {
         stockId: this.stock.id,
         stockPrice: this.stock.price,
         quantity: this.quantity
       }
-      this.sellStocksAction(order)
+      this.sellStockAction(order)
       // this.$store.dispatch('sellStock', order)
       this.quantity = 0
     }
